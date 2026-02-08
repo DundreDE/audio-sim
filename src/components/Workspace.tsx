@@ -48,6 +48,7 @@ export const Workspace: React.FC = () => {
     const { verifySetup } = useVerification(devices, cables);
     const [draftCable, setDraftCable] = useState<{ startPortId: string; currentPos: { x: number; y: number } } | null>(null);
     const [isDeleteMode, setIsDeleteMode] = useState<boolean>(false);
+    const [sidebarVisible, setSidebarVisible] = useState<boolean>(true);
     const containerRef = useRef<HTMLDivElement>(null);
 
     const handleDeviceMove = (id: string, x: number, y: number) => {
@@ -122,34 +123,45 @@ export const Workspace: React.FC = () => {
             <CableToolbar selectedType={selectedCableType} onSelect={setSelectedCableType} />
             <DeleteToolbar isDeleteMode={isDeleteMode} onToggle={setIsDeleteMode} />
             <MiniGame devices={devices} />
+
+            {/* Sidebar Toggle Button */}
+            <button
+                onClick={() => setSidebarVisible(!sidebarVisible)}
+                className="absolute bottom-4 left-4 z-50 bg-gray-800 text-white p-3 rounded-full shadow-xl hover:bg-gray-700 transition-colors"
+                title={sidebarVisible ? "Inventar ausblenden" : "Inventar einblenden"}
+            >
+                {sidebarVisible ? '◀' : '▶'}
+            </button>
+
             {/* Sidebar */}
-            <div className="w-full md:w-64 bg-gray-800 text-white p-2 md:p-4 flex flex-col gap-2 md:gap-4 z-20 shadow-xl max-h-48 md:max-h-full overflow-y-auto">
-                <h1 className="text-lg md:text-xl font-bold mb-2 md:mb-4">Schultechnik Sim</h1>
+            {sidebarVisible && (
+                <div className="w-full md:w-64 bg-gray-800 text-white p-2 md:p-4 flex flex-col gap-2 md:gap-4 z-20 shadow-xl max-h-48 md:max-h-full overflow-y-auto">
+                    <h1 className="text-lg md:text-xl font-bold mb-2 md:mb-4">Schultechnik Sim</h1>
 
-                <div className="bg-gray-700 p-2 rounded border border-green-600">
-                    <button
-                        onClick={verifySetup}
-                        className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-1 flex items-center justify-center gap-2 transition-colors"
-                    >
-                        <span>✅</span> System Check
-                    </button>
-                    <p className="text-[10px] text-gray-400 text-center">Prüft Verkabelung & Signal</p>
-                </div>
+                    <div className="bg-gray-700 p-2 rounded border border-green-600">
+                        <button
+                            onClick={verifySetup}
+                            className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-1 flex items-center justify-center gap-2 transition-colors"
+                        >
+                            <span>✅</span> System Check
+                        </button>
+                        <p className="text-[10px] text-gray-400 text-center">Prüft Verkabelung & Signal</p>
+                    </div>
 
-                <div className="space-y-2 overflow-y-auto flex-1">
-                    <p className="text-sm text-gray-400 uppercase">Inventar</p>
-                    <button onClick={() => spawnDevice('MIC')} className="w-full p-2 bg-gray-700 hover:bg-gray-600 rounded text-left">Mikrofon</button>
-                    <button onClick={() => spawnDevice('MIXER')} className="w-full p-2 bg-gray-700 hover:bg-gray-600 rounded text-left">Mischpult</button>
-                    <button onClick={() => spawnDevice('AMP')} className="w-full p-2 bg-gray-700 hover:bg-gray-600 rounded text-left">Endstufe</button>
-                    <button onClick={() => spawnDevice('CROSSOVER')} className="w-full p-2 bg-gray-700 hover:bg-gray-600 rounded text-left">Frequenzweiche</button>
-                    <button onClick={() => spawnDevice('SPEAKER')} className="w-full p-2 bg-gray-700 hover:bg-gray-600 rounded text-left">Lautsprecher</button>
-                </div>
+                    <div className="space-y-2 overflow-y-auto flex-1">
+                        <p className="text-sm text-gray-400 uppercase">Inventar</p>
+                        <button onClick={() => spawnDevice('MIC')} className="w-full p-2 bg-gray-700 hover:bg-gray-600 rounded text-left">Mikrofon</button>
+                        <button onClick={() => spawnDevice('MIXER')} className="w-full p-2 bg-gray-700 hover:bg-gray-600 rounded text-left">Mischpult</button>
+                        <button onClick={() => spawnDevice('AMP')} className="w-full p-2 bg-gray-700 hover:bg-gray-600 rounded text-left">Endstufe</button>
+                        <button onClick={() => spawnDevice('CROSSOVER')} className="w-full p-2 bg-gray-700 hover:bg-gray-600 rounded text-left">Frequenzweiche</button>
+                        <button onClick={() => spawnDevice('SPEAKER')} className="w-full p-2 bg-gray-700 hover:bg-gray-600 rounded text-left">Lautsprecher</button>
+                    </div>
 
-                <div className="mt-auto">
-                    <p className="text-xs text-gray-500">Links ziehen zum Bewegen.</p>
-                    <p className="text-xs text-gray-500">Von Anschluss zu Anschluss ziehen zum Verkabeln.</p>
+                    <div className="mt-auto">
+                        <p className="text-xs text-gray-500">Links ziehen zum Bewegen.</p>
+                        <p className="text-xs text-gray-500">Von Anschluss zu Anschluss ziehen zum Verkabeln.</p>
+                    </div>
                 </div>
-            </div>
 
             {/* Canvas */}
             <div
