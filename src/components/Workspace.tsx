@@ -118,13 +118,13 @@ export const Workspace: React.FC = () => {
     }, [cables]);
 
     return (
-        <div className="flex h-screen w-full overflow-hidden">
+        <div className="flex h-screen w-full overflow-hidden flex-col md:flex-row">
             <CableToolbar selectedType={selectedCableType} onSelect={setSelectedCableType} />
             <DeleteToolbar isDeleteMode={isDeleteMode} onToggle={setIsDeleteMode} />
             <MiniGame devices={devices} />
             {/* Sidebar */}
-            <div className="w-64 bg-gray-800 text-white p-4 flex flex-col gap-4 z-20 shadow-xl">
-                <h1 className="text-xl font-bold mb-4">Schultechnik Sim</h1>
+            <div className="w-full md:w-64 bg-gray-800 text-white p-2 md:p-4 flex flex-col gap-2 md:gap-4 z-20 shadow-xl max-h-48 md:max-h-full overflow-y-auto">
+                <h1 className="text-lg md:text-xl font-bold mb-2 md:mb-4">Schultechnik Sim</h1>
 
                 <div className="bg-gray-700 p-2 rounded border border-green-600">
                     <button
