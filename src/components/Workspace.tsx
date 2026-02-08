@@ -162,6 +162,8 @@ export const Workspace: React.FC = () => {
                         <p className="text-xs text-gray-500">Von Anschluss zu Anschluss ziehen zum Verkabeln.</p>
                     </div>
                 </div>
+            )}
+
 
             {/* Canvas */}
             <div
