@@ -49,6 +49,8 @@ export const Workspace: React.FC = () => {
     const [draftCable, setDraftCable] = useState<{ startPortId: string; currentPos: { x: number; y: number } } | null>(null);
     const [isDeleteMode, setIsDeleteMode] = useState<boolean>(false);
     const [sidebarVisible, setSidebarVisible] = useState<boolean>(true);
+    const [miniGameVisible, setMiniGameVisible] = useState<boolean>(true);
+    const [toolbarsVisible, setToolbarsVisible] = useState<boolean>(true);
     const containerRef = useRef<HTMLDivElement>(null);
 
     const handleDeviceMove = (id: string, x: number, y: number) => {
@@ -120,18 +122,38 @@ export const Workspace: React.FC = () => {
 
     return (
         <div className="flex h-screen w-full overflow-hidden flex-col md:flex-row">
-            <CableToolbar selectedType={selectedCableType} onSelect={setSelectedCableType} />
-            <DeleteToolbar isDeleteMode={isDeleteMode} onToggle={setIsDeleteMode} />
-            <MiniGame devices={devices} />
+            {toolbarsVisible && (
+                <>
+                    <CableToolbar selectedType={selectedCableType} onSelect={setSelectedCableType} />
+                    <DeleteToolbar isDeleteMode={isDeleteMode} onToggle={setIsDeleteMode} />
+                </>
+            )}
+            {miniGameVisible && <MiniGame devices={devices} />}
 
-            {/* Sidebar Toggle Button */}
-            <button
-                onClick={() => setSidebarVisible(!sidebarVisible)}
-                className="absolute bottom-4 left-4 z-50 bg-gray-800 text-white p-3 rounded-full shadow-xl hover:bg-gray-700 transition-colors"
-                title={sidebarVisible ? "Inventar ausblenden" : "Inventar einblenden"}
-            >
-                {sidebarVisible ? '◀' : '▶'}
-            </button>
+            {/* Toggle Buttons - Floating Control Panel */}
+            <div className="absolute top-4 right-4 z-50 bg-gray-900 p-2 rounded-lg shadow-xl flex flex-col gap-2">
+                <button
+                    onClick={() => setSidebarVisible(!sidebarVisible)}
+                    className="bg-gray-700 hover:bg-gray-600 text-white p-2 rounded text-xs font-bold"
+                    title="Inventar ein/aus"
+                >
+                    📦 {sidebarVisible ? '◀' : '▶'}
+                </button>
+                <button
+                    onClick={() => setMiniGameVisible(!miniGameVisible)}
+                    className="bg-gray-700 hover:bg-gray-600 text-white p-2 rounded text-xs font-bold"
+                    title="Challenge ein/aus"
+                >
+                    ⚡ {miniGameVisible ? '✕' : '✓'}
+                </button>
+                <button
+                    onClick={() => setToolbarsVisible(!toolbarsVisible)}
+                    className="bg-gray-700 hover:bg-gray-600 text-white p-2 rounded text-xs font-bold"
+                    title="Werkzeuge ein/aus"
+                >
+                    🔧 {toolbarsVisible ? '✕' : '✓'}
+                </button>
+            </div>
 
             {/* Sidebar */}
             {sidebarVisible && (

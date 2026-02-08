@@ -51,8 +51,8 @@ export const MiniGame: React.FC<MiniGameProps> = ({ devices }) => {
     }, [devices, targetChannel, targetLevel, tolerance, progress, isComplete]);
 
     return (
-        <div className="absolute top-4 right-4 bg-gray-800 text-white p-4 rounded-lg shadow-xl w-64 border-2 border-yellow-500 z-50">
-            <h2 className="text-lg font-bold text-yellow-500 mb-2">⚡ Gain Challenge</h2>
+        <div className="absolute bottom-4 left-4 bg-gray-800 text-white p-2 md:p-4 rounded-lg shadow-xl w-48 md:w-64 border-2 border-yellow-500 z-40">
+            <h2 className="text-sm md:text-lg font-bold text-yellow-500 mb-1 md:mb-2">⚡ Gain Challenge</h2>
 
             <div className="mb-4">
                 <p className="text-sm">{message}</p>
